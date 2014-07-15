@@ -1,3 +1,9 @@
 module.exports.vdom = function( fn, cls, bs ){
-	cls.test = function(){console.log(1);};
+	var components = {};
+	cls.fn = function( k, v ){
+		components[k] = v;
+	};
+	fn.NEW = function( key, type ){
+		this._el = new components[type]();
+	};
 };
