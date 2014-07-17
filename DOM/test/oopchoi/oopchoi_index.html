@@ -22,9 +22,9 @@
 </div>
 <div id="result"></div>
 <div id="test"></div>
-<script src="../../../bsJS/bsjs.0.5.js"></script>
-<script src="../../../bsJStest/bsTest.js"></script>
-<script src="../../../bsJStest/0.5/printer.js"></script>
+<script src="../../../../bsJS/bsjs.0.5.js"></script>
+<script src="../../../../bsJStest/bsTest.js"></script>
+<script src="../../../../bsJStest/0.5/printer.js"></script>
 <script>
 bs.debug(1);
 //bs.plugin( 'vdom' );
@@ -34,9 +34,11 @@ bs( function(){
         console.log('000000000000000'),
         console.log(bs.Dom('[data-bsview]')),
         console.log('111111111111111');
-        console.log(bs.Dom('[data-bsview]').S( i, '*bsview', 'this' ));
+        console.log(bs.Dom('[data-bsview]').S('*bsview'));
         console.log('2222222222222222');
 		forms[bs.Dom('[data-bsview]').S( i, '*bsview' )] = t0 = bs.Dom('[data-bsview]')[i];
+        console.log(bs.Dom('[data-bsview]').S( i ) );
+        console.log('3333333333333');
         console.log(bs.Dom(t0).S('>'));
         t0 = bs.Dom(t0).S('>');
 
