@@ -65,7 +65,7 @@
                     case "input":
                         switch( child.S('@type').toLowerCase() ){
                             case "checkbox":
-                                child.S( 'after', bs.Dom('<div></div>').S('html', 'check'+i+k, 'display', 'inline', '*bsview-element', bs.Dom(child).S(k, '*bs'), 'this' ) );
+                                child.S( 'after', bs.Dom('<div></div>').S('html', 'check'+i+k, 'display', 'inline', '*bsview-element', bs.Dom(child).S('*bs'), 'this' ) );
                         }
                     break;
                     case'textarea':
