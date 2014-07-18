@@ -76,6 +76,11 @@
         }
         console.log(forms);
 
+        t0 = bs.Dom(['data-bsview-element']);
+        for(i=0, j=t0.length; i<j; i++){
+            console.log(bs.Dom(t0[i]).S('*bs'));
+        }
+
 
 
 
