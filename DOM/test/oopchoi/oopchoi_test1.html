@@ -78,7 +78,13 @@
 
         t0 = bs.Dom('[data-bsview-element]');
         for(i=0, j=t0.length; i<j; i++){
-            console.log(bs.Dom(t0[i]).S(i, '*bs'));
+            t1 = bs.Dom(bs.Dom('[data-bsview-element]')[i]).S('*bsview-element');
+            t2 = bs.Dom('[data-bs]');
+            for(k=0, l=t2.length; k<l; k++){
+                if( t1== bs.Dom(t2[k]).S('*bs')){
+                    console.log(t1);
+                }
+            }
         }
 
 
