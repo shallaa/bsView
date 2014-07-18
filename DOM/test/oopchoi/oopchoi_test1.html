@@ -82,7 +82,9 @@
             t2 = bs.Dom('[data-bs]');
             for(k=0, l=t2.length; k<l; k++){
                 if( t1== bs.Dom(bs.Dom('[data-bs]')[k]).S('*bs')){
+                    console.log('-----found input tag-----')
                     console.log(t1);
+                    console.log(bs.Dom(bs.Dom('[data-bs]')[k]));
                 }
             }
         }
