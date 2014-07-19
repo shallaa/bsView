@@ -24,7 +24,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.fontX = 0;
         this.fontY = 0;
 
-        this.context;
+        //this.context;
     }
 
     fn.destroy = function () {
@@ -50,8 +50,10 @@ bs.cls('Button', function (fn, clsfn, bs) {
         fn.init();
     }
 
-    fn.localHandler = function(evt, context){
-        if(context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
+    fn.context = null;
+
+    fn.localHandler = function(evt){
+        if(fn.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
             this.fillStyle = 'orange',
             this.fontColor = 'white',
             this.draw();
@@ -63,7 +65,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
     }
 
     fn.init = function(){
-        bs.WIN.on('mousedown', fn.localHandler, this.context);
+        bs.WIN.on('mousedown', fn.localHandler);
     }
 
     fn.addEventListener = function(type, handler){
