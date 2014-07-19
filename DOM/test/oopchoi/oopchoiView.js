@@ -26,6 +26,8 @@ bs.cls('Button', function (fn, clsfn, bs) {
 
         this.context;
         fn.self = this;
+
+        fn.init();
     }
 
     fn.destroy = function () {
@@ -49,8 +51,6 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.fill();
         this.context.font = this.fontSize + 'pt ' + this.fontFamily;
         this.context.fillText(this.label, this.fontX, this.fontY);
-
-        fn.init();
     }
 
     fn.localHandler = function(evt){
