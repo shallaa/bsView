@@ -26,6 +26,8 @@ bs.cls('Button', function (fn, clsfn, bs) {
 
         this.context;
         fn.self = this;
+
+        fn.init();
     }
 
     fn.destroy = function () {
@@ -49,12 +51,10 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.fill();
         this.context.font = this.fontSize + 'pt ' + this.fontFamily;
         this.context.fillText(this.label, this.fontX, this.fontY);
-
-        fn.init();
     }
 
     fn.localHandler = function(evt){
-        console.log(fn.self.context.getImageData(evt.x, evt.y, 1, 1)[3]);
+        console.log(fn.self.context.getImageData(evt.x, evt.y, 1, 1).data[3]);
         if(fn.self.context.getImageData(evt.x, evt.y, 1, 1).data[3] > 220){
             fn.self.fillStyle = 'orange',
             fn.self.fontColor = 'white',
