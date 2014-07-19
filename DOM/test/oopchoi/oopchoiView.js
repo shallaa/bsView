@@ -40,8 +40,10 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.strokeStyle = this.strokeStyle;
         this.context.stroke();
 
-        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
-        this.context.fillText(this.label, this.fontX, this.fontY);
+//        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
+//        this.context.fillText(this.label, this.fontX, this.fontY);
+        context.font = 'italic 40pt Calibri';
+        context.fillText('Hello World!', 150, 100);
     }
 
     fn.addEventListener = function(type, handler){
