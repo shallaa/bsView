@@ -25,28 +25,30 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.fontY = 0;
 
         this.context;
+        fn.self = this;
     }
 
     fn.destroy = function () {
         this.END();
     }
 
+    fn.self = null;
+
     // 그리기
     fn.draw = function(){
-        fn.context = this.context;
-        fn.context.beginPath();
-        fn.context.rect(this.x, this.y, this.width, this.height);
-        fn.context.fillStyle = this.fillStyle;
-        fn.context.fill();
-        fn.context.lineWidth = this.lineWidth;
-        fn.context.strokeStyle = this.strokeStyle;
-        fn.context.stroke();
+        this.context.beginPath();
+        this.context.rect(this.x, this.y, this.width, this.height);
+        this.context.fillStyle = this.fillStyle;
+        this.context.fill();
+        this.context.lineWidth = this.lineWidth;
+        this.context.strokeStyle = this.strokeStyle;
+        this.context.stroke();
 
-        fn.context.beginPath();
-        fn.context.fillStyle = this.fontColor;
-        fn.context.fill();
-        fn.context.font = this.fontSize + 'pt ' + this.fontFamily;
-        fn.context.fillText(this.label, this.fontX, this.fontY);
+        this.context.beginPath();
+        this.context.fillStyle = this.fontColor;
+        this.context.fill();
+        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
+        this.context.fillText(this.label, this.fontX, this.fontY);
 
         fn.init();
     }
@@ -54,14 +56,14 @@ bs.cls('Button', function (fn, clsfn, bs) {
     fn.context = null;
 
     fn.localHandler = function(evt){
-        if(fn.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
-            this.fillStyle = 'orange',
-            this.fontColor = 'white',
-            this.draw();
+        if(fn.self.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
+            fn.self.fillStyle = 'orange',
+            fn.self.fontColor = 'white',
+            fn.self.draw();
         } else {
-            this.fillStyle = 'yellow',
-            this.fontColor = 'black',
-            this.draw();
+            fn.self.fillStyle = 'yellow',
+            fn.self.fontColor = 'black',
+            fn.self.draw();
         }
     }
 
