@@ -22,7 +22,7 @@
 <script src="./oopchoiView.js"></script>
 <script>
 bs( function(){
-    var forms = {}, bsviewData, currentForm, children, child, t0, t1, t2, t3, t4, t5, i, j, k, l;
+    var forms = {}, bsviewData, currentForm, children, child, currentButton, t0, t1, t2, t3, t4, t5, i, j, k, l;
 
     for(i=0, j=bs.Dom('[data-bsview]').length; i<j; i++){
         bsviewData = bs.Dom('[data-bsview]').S(i, '*bsview');
@@ -39,8 +39,8 @@ bs( function(){
                 case "input":
                     switch( child.S('@type').toLowerCase() ){
                         case "button":
-                            var currentContext = child.S( 'after', bs.Dom('<canvas></canvas>').S('id', 'cvs_'+child.S('@id'), 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' ) ).getContext('2d');
-                            bs.Button(child.S('@id')).S('width', 200, 'height', 50, 'fontSize', 12, 'fontFamily', 'gulim', 'fillStyle', 'yellow', 'lineWidth', 3, 'strokeStyle', 'black', 'this').draw();
+                            child.S( 'after', (currentButton = bs.Dom('<canvas></canvas>').S('id', 'cvs_'+child.S('@id'), 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' ) ) );
+                            bs.Button(child.S('@id')).S('context', currentButton.getContext('2d') , 'width', 200, 'height', 50, 'fontSize', 12, 'fontFamily', 'gulim', 'fillStyle', 'yellow', 'lineWidth', 3, 'strokeStyle', 'black', 'this').draw();
 
 
                             //child.S( 'after', bs.Dom('<div></div>').S('html', 'check'+i+k, 'display', 'inline', '*bsview-element', bs.Dom(child).S('*bs'), 'this' ) );
