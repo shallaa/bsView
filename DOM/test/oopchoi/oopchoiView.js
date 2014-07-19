@@ -51,7 +51,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
     }
 
     fn.localHandler = function(evt){
-        console.log(evt.clientX + ', ' + evt.clientY);
+        console.log(evt.x + ', ' + evt.y);
     }
 
     fn.init = function(){
