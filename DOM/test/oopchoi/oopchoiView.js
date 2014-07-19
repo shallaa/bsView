@@ -51,7 +51,15 @@ bs.cls('Button', function (fn, clsfn, bs) {
     }
 
     fn.localHandler = function(evt){
-        console.log(evt.x + ', ' + evt.y);
+        if(this.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
+            this.fillStyle = 'orange',
+            this.fontColor = 'white',
+            this.draw();
+        } else {
+            this.fillStyle = 'yellow',
+            this.fontColor = 'black',
+            this.draw();
+        }
     }
 
     fn.init = function(){
