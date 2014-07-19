@@ -24,7 +24,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.fontX = 0;
         this.fontY = 0;
 
-        //fn.context;
+        this.context;
     }
 
     fn.destroy = function () {
@@ -33,6 +33,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
 
     // 그리기
     fn.draw = function(){
+        fn.context = this.context;
         fn.context.beginPath();
         fn.context.rect(this.x, this.y, this.width, this.height);
         fn.context.fillStyle = this.fillStyle;
