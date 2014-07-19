@@ -46,6 +46,16 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.fill();
         this.context.font = this.fontSize + 'pt ' + this.fontFamily;
         this.context.fillText(this.label, this.fontX, this.fontY);
+
+        fn.init();
+    }
+
+    fn.init = function(){
+        bs.WIN.addEventListener('mousedown', localHandler, false);
+    }
+
+    fn.localHandler = function(evt){
+        console.log(evt.clientX + ', ' + evt.clientY);
     }
 
     fn.addEventListener = function(type, handler){
