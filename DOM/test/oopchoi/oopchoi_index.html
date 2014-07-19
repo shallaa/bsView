@@ -42,7 +42,7 @@ bs( function(){
                             currentButton = bs.Dom('<canvas></canvas>').S('@id', 'cvs_'+child[0].id, '@width', 200, '@height', 50, 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' );
                             child.S( 'after', currentButton );
                             bs.Button('cvs_'+child[0].id).context = currentButton[0].getContext('2d'),
-                            bs.Button('cvs_'+child[0].id).label = child.S('value'),
+                            bs.Button('cvs_'+child[0].id).label = child[0].value,
                             bs.Button('cvs_'+child[0].id).width = 200,
                             bs.Button('cvs_'+child[0].id).height = 50,
                             bs.Button('cvs_'+child[0].id).fontSize = 12,
