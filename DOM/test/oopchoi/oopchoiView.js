@@ -32,10 +32,11 @@ bs.cls('Button', function (fn, clsfn, bs) {
     fn.draw = function(){
         this.context.beginPath();
         this.context.rect(this.x, this.y, this.width, this.height);
-        this.context.fillStyle = this.fillStyle;
-        this.context.fill();
+
         this.context.lineWidth = this.lineWidth;
         this.context.strokeStyle = this.strokeStyle;
+        this.context.fillStyle = this.fillStyle;
+        this.context.fill();
         this.context.stroke();
         this.context.font = this.fontSize + 'pt ' + this.fontFamily;
         this.context.fillText(this.label, this.width, this.height);
