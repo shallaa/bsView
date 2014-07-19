@@ -18,6 +18,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.alpha;
         this.fontSize;
         this.fontFamily;
+        this.fontColor;
         this.lineWidth;
         this.strokeStyle;
         this.fontX = 0;
@@ -40,10 +41,11 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.strokeStyle = this.strokeStyle;
         this.context.stroke();
 
-//        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
-//        this.context.fillText(this.label, this.fontX, this.fontY);
-        this.context.font = 'italic 40pt Calibri';
-        this.context.fillText('Hello World!', 150, 100);
+        this.context.beginPath();
+        this.context.fillStyle = this.fontColor;
+        this.context.fill();
+        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
+        this.context.fillText(this.label, this.fontX, this.fontY);
     }
 
     fn.addEventListener = function(type, handler){
