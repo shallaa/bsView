@@ -12,8 +12,8 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.width;
         this.height;
         this.fillStyle;
-        this.x;
-        this.y;
+        this.x = 0;
+        this.y = 0;
         this.rotation;
         this.alpha;
         this.fontSize;
