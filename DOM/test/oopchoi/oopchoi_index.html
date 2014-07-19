@@ -15,49 +15,55 @@
 <body>
 <div id="stage">
 <form data-bsview="f0">
-	<input type="checkbox" name="cb0" id="cb0_0" value="0"/><label for="cb0_0">check0</label>
-	<input type="checkbox" name="cb0" id="cb0_1" value="1"/><label for="cb0_1">check1</label>
-	<input type="checkbox" name="cb0" id="cb0_2" value="2"/><label for="cb0_2">check2</label>
+	<input type="button" name="btn0" id="btn0" value="my button0" />
 </form>
 </div>
-<div id="result"></div>
-<div id="test"></div>
 <script src="../../../../bsJS/bsjs.0.5.js"></script>
-<script src="../../../../bsJStest/bsTest.js"></script>
-<script src="../../../../bsJStest/0.5/printer.js"></script>
+<script src="./oopchoiView.js"></script>
 <script>
-bs.debug(1);
-//bs.plugin( 'vdom' );
 bs( function(){
-	var forms = {}, t0, t1, i, j, k, l;
-	for( i = 0, j = bs.Dom('[data-bsview]').length ; i < j ; i++ ){
-        console.log('000000000000000'),
-        console.log(bs.Dom('[data-bsview]')),
-        console.log('111111111111111');
-        console.log(bs.Dom('[data-bsview]').S('*bsview'));
-        console.log('2222222222222222');
-		forms[bs.Dom('[data-bsview]').S( i, '*bsview' )] = t0 = bs.Dom('[data-bsview]')[i];
-        console.log(bs.Dom('[data-bsview]').S( i ) );
-        console.log('3333333333333');
-        console.log(bs.Dom(t0).S('>'));
-        t0 = bs.Dom(t0).S('>');
+    var forms = {}, bsviewData, currentForm, children, child, t0, t1, t2, t3, t4, t5, i, j, k, l;
 
-		for( k = 0, l = t0.length ; k < l ; k++ ){
-			( t1 = bs.Dom(t0[k]) ).S( 'display', 'none' );
-			switch( t1.S('@tagName').toLowerCase() ){
-			case'input':
-				switch( t1.S('@type').toLowerCase() ){
-				case'checkbox':
-					t1.S( 'after', bs.Dom('<div></div>').S('html', 'check'+k, 'display', 'inline', '*bsview-item', 'aaa', 'this' ) );
-				}
-				break;
-			case'textarea':
-			case'select':
-			case'label':
-			}
-		}
-	}
-	
+    for(i=0, j=bs.Dom('[data-bsview]').length; i<j; i++){
+        bsviewData = bs.Dom('[data-bsview]').S(i, '*bsview');
+        forms[bsviewData] = currentForm = bs.Dom('[data-bsview]')[i];
+
+        children = bs.Dom(currentForm).S('>');
+        for(k=0, l=children.length; k<l; k++){
+            (child = bs.Dom(children[k])).S('display', 'none');
+
+            console.log('------' + k + '------');
+            console.log(child);
+
+            switch( child.S('@tagName').toLowerCase() ){
+                case "input":
+                    switch( child.S('@type').toLowerCase() ){
+                        case "button":
+                            var currentContext = child.S( 'after', bs.Dom('<canvas></canvas>').S('id', 'cvs_'+child.S('@id'), 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' ) ).getContext('2d');
+                            bs.Button(child.S('@id')).S('width', 200, 'height', 50, 'fontSize', 12, 'fontFamily', 'gulim', 'fillStyle', 'yellow', 'lineWidth', 3, 'strokeStyle', 'black', 'this').draw();
+
+
+                            //child.S( 'after', bs.Dom('<div></div>').S('html', 'check'+i+k, 'display', 'inline', '*bsview-element', bs.Dom(child).S('*bs'), 'this' ) );
+                    }
+                    break;
+            }
+        }
+    }
+    console.log(forms);
+
+    t0 = bs.Dom('[data-bsview-element]');
+    for(i=0, j=t0.length; i<j; i++){
+        t1 = bs.Dom(bs.Dom('[data-bsview-element]')[i]).S('*bsview-element');
+        t2 = bs.Dom('[data-bs]');
+        for(k=0, l=t2.length; k<l; k++){
+            if( t1== bs.Dom(bs.Dom('[data-bs]')[k]).S('*bs')){
+                console.log('-----found input tag-----')
+                console.log(t1);
+                console.log(bs.Dom(bs.Dom('[data-bs]')[k])[0]);
+            }
+        }
+    }
+
 //	bs.Vdom.test();
 } );
 </script>
