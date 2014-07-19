@@ -50,12 +50,12 @@ bs.cls('Button', function (fn, clsfn, bs) {
         fn.init();
     }
 
-    fn.init = function(){
-        bs.WIN.addEventListener('mousedown', fn.localHandler, false);
-    }
-
     fn.localHandler = function(evt){
         console.log(evt.clientX + ', ' + evt.clientY);
+    }
+
+    fn.init = function(){
+        bs.WIN.addEventListener('mousedown', fn.localHandler, false);
     }
 
     fn.addEventListener = function(type, handler){
