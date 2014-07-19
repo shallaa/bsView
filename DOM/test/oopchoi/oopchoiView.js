@@ -53,8 +53,6 @@ bs.cls('Button', function (fn, clsfn, bs) {
         fn.init();
     }
 
-    fn.context = null;
-
     fn.localHandler = function(evt){
         if(fn.self.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
             fn.self.fillStyle = 'orange',
