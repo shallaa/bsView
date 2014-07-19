@@ -20,6 +20,8 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.fontFamily;
         this.lineWidth;
         this.strokeStyle;
+        this.fontX = 0;
+        this.fontY = 0;
 
         this.context;
     }
@@ -39,7 +41,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
         this.context.stroke();
 
         this.context.font = this.fontSize + 'pt ' + this.fontFamily;
-        this.context.fillText(this.label, this.width, this.height);
+        this.context.fillText(this.label, this.fontX, this.fontY);
     }
 
     fn.addEventListener = function(type, handler){
