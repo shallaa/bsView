@@ -39,7 +39,7 @@ bs( function(){
                 case "input":
                     switch( child.S('@type').toLowerCase() ){
                         case "button":
-                            child.S( 'after', (currentButton = bs.Dom('<canvas></canvas>').S('id', 'cvs_'+child.S('@id'), 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' ) ) );
+                            child.S( 'after', (currentButton = bs.Dom('<canvas></canvas>').S('id', 'cvs_'+child.S('@id'), 'width', 200, 'height', 50, 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' ) ) );
                             bs.Button(child.S('@id')).S('context', currentButton.getContext('2d') , 'width', 200, 'height', 50, 'fontSize', 12, 'fontFamily', 'gulim', 'fillStyle', 'yellow', 'lineWidth', 3, 'strokeStyle', 'black', 'this').draw();
 
 
