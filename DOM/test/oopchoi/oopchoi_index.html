@@ -39,7 +39,7 @@ bs( function(){
                 case "input":
                     switch( child.S('@type').toLowerCase() ){
                         case "button":
-                            currentButton = bs.Dom('<canvas></canvas>').S('@id', 'cvs_'+child[0].id, '@width', 500, '@height', 500, 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' );
+                            currentButton = bs.Dom('<canvas></canvas>').S('@id', 'cvs_'+child[0].id, '@width', 200, '@height', 50, 'display', 'inline', '*bsview-element', child.S('*bs'), 'this' );
                             child.S( 'after', currentButton );
                             bs.Button('cvs_'+child[0].id).context = currentButton[0].getContext('2d'),
                             bs.Button('cvs_'+child[0].id).label = child[0].value,
@@ -50,8 +50,8 @@ bs( function(){
                             bs.Button('cvs_'+child[0].id).fillStyle = 'yellow',
                             bs.Button('cvs_'+child[0].id).lineWidth = 3,
                             bs.Button('cvs_'+child[0].id).strokeStyle = 'black',
-                            bs.Button('cvs_'+child[0].id).fontX = 50,
-                            bs.Button('cvs_'+child[0].id).fontY = 20,
+                            bs.Button('cvs_'+child[0].id).fontX = 5,
+                            bs.Button('cvs_'+child[0].id).fontY = 3,
                             bs.Button('cvs_'+child[0].id).fontColor = 'black',
                             bs.Button('cvs_'+child[0].id).draw();
                     }
