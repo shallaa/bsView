@@ -50,8 +50,8 @@ bs.cls('Button', function (fn, clsfn, bs) {
         fn.init();
     }
 
-    fn.localHandler = function(evt){
-        if(this.context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
+    fn.localHandler = function(evt, context){
+        if(context.getImageData(evt.x, evt.y, 1, 1)[3] > 220){
             this.fillStyle = 'orange',
             this.fontColor = 'white',
             this.draw();
@@ -63,7 +63,7 @@ bs.cls('Button', function (fn, clsfn, bs) {
     }
 
     fn.init = function(){
-        bs.WIN.on('mousedown', fn.localHandler);
+        bs.WIN.on('mousedown', fn.localHandler, this.context);
     }
 
     fn.addEventListener = function(type, handler){
