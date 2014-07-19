@@ -30,24 +30,16 @@ bs.cls('Button', function (fn, clsfn, bs) {
 
     // 그리기
     fn.draw = function(){
-//        this.context.beginPath();
-//        this.context.rect(this.x, this.y, this.width, this.height);
-//
-//        this.context.lineWidth = this.lineWidth;
-//        this.context.strokeStyle = this.strokeStyle;
-//        this.context.fillStyle = this.fillStyle;
-//        this.context.fill();
-//        this.context.stroke();
-//        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
-//        this.context.fillText(this.label, this.width, this.height);
-
         this.context.beginPath();
-        this.context.rect(0, 0, 200, 50);
-        this.context.fillStyle = 'yellow';
+        this.context.rect(this.x, this.y, this.width, this.height);
+        this.context.fillStyle = this.fillStyle;
         this.context.fill();
-        this.context.lineWidth = 3;
-        this.context.strokeStyle = 'black';
+        this.context.lineWidth = this.lineWidth;
+        this.context.strokeStyle = this.strokeStyle;
         this.context.stroke();
+
+        this.context.font = this.fontSize + 'pt ' + this.fontFamily;
+        this.context.fillText(this.label, this.width, this.height);
     }
 
     fn.addEventListener = function(type, handler){
