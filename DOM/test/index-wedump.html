@@ -11,6 +11,27 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi" />
     <link rel="shortcut icon" href="http://blog.bsidesoft.com/favicon.ico" type="image/x-icon">
+    <style type="text/css">
+        .box {
+            border: 2px solid gray;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            -webkit-transition:width 0.3s, height 0.3s, background-color 0.3s, -webkit-transform 0.3s;
+            transition:width 0.3s, height 0.3s, background-color 0.3s, transform 0.3s;
+        }
+        .checked {
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            width: 10px;
+            height: 21px;
+            border-top: none;
+            border-left: none;
+            border-right-width: 2px;
+            border-bottom-width: 2px;
+            border-color: #0f9d58;
+        }
+    </style>
 </head>
 <body>
 <div id="stage">
@@ -35,7 +56,7 @@
                     case'input':
                         switch( t1.S('@type').toLowerCase() ){
                             case'checkbox':
-                                init(t1);
+                                t2 = init(t1);
                                 clickEvent(t2);
                                 connectEvent(t1, t2);
                                 break;
@@ -49,17 +70,22 @@
         }
 
         function init(component){
-            component.S( 'opacity', 0, 'width', 0, 'height', 0, 'after', ( t2 = bs.Dom('<div></div>').S( 'border', '1px solid red', 'width', '10px', 'height', '10px', 'display', 'inline-block', '*bsview-item', 'check', 'this' ) ) );
+            var bsitem = bs.Dom('<div></div>').S( '@class', 'box', 'this' );
+
+            component.S( 'opacity', 0, 'width', 0, 'height', 0, 'after', bsitem );
+
+            return bsitem;
         }
 
         function clickEvent(component){
             component.S( 'click', function(e){
                 var bsitem = bs.Dom(e.dom),
-                    origin = bs.Dom( bsitem.S('before') ),
+                    origin = bs.Dom(bsitem.S('before')),
                     value = origin.S('@checked');
 
                 origin.S( '@checked', !value );
-                bsitem.S( 'html', !value ? 'V' : '' );
+                //bsitem.S( '@class', !value ? 'box checked' : 'box' );
+                bs.ANI.style( bsitem.S( 'width', 18, 'this' ), 'width', 21, 'time', 0.3, 'ease', 'backOut' );
             } );
         }
 
