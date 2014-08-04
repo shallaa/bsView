@@ -33,6 +33,6 @@ module.exports.ui = {
 		hide = function(){dom.S( 'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none' ), toasted = 0, toast();},
 		toasted, toastQue = [], dom, curr;
 		bs.Css('#bsUI_toast').S( 'overflow', 'hidden', 'position', 'fixed', tb, 0, 'background', '#2b2b2f', 'z-index', 999999999 );
-		this.toast = toast, this.toast();
+		(this.toast = toast).apply( this, arguments );
 	}
 };
