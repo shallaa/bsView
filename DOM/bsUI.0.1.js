@@ -1,10 +1,13 @@
 module.exports.ui = (function(){
-var inited, init = function(){
+
+var r = bs.rand, rf = bs.randf, tb = bs.DETECT.device == 'mobile' ? 'bottom' : 'top',
+inited, init = function(){
 	inited = 1,
 	bs.Css('#bsUI_toast').S( 'overflow', 'hidden', 'position', 'fixed', tb, 0, 'background', '#2b2b2f', 'z-index', 999999999 );
-}, ui = {
-	toast:function(){
-		var toast = function( msg, time, durationTime, ease, parent ){
+}, 
+ui = {
+	toast:function( msg, time, durationTime, ease, parent ){
+		var toast = function(){
 			if( msg ) toastQue.push(arguments);
 			if( toasted || !toastQue.length ) return;
 			toasted = 1, curr = toastQue.pop();
@@ -21,6 +24,7 @@ var inited, init = function(){
 				'end', hide, 'update', particle
 			);
 		},
+		hide = function(){dom.S( 'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none' ), toasted = 0, toast();},
 		particle = function( target, rate, T ){
 			var i = r( 2, 5 ), x, y, s, d;
 			while(i--) bs.ANI.style(
@@ -33,8 +37,6 @@ var inited, init = function(){
 			);
 		},
 		particleEnd = function(target){target.S(null);},
-		hide = function(){dom.S( 'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none' ), toasted = 0, toast();},
-		r = bs.rand, rf = bs.randf, tb = bs.DETECT.device == 'mobile' ? 'bottom' : 'top',
 		toasted, toastQue = [], dom, curr;
 		
 		if( !inited ) init();
