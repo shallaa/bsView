@@ -8,7 +8,7 @@ inited, init = function(){
 ui = {
 	toast:function( msg, time, durationTime, ease, parent ){
 		var toast = function(){
-			if( msg ) toastQue.push(arguments);
+			if( arguments[0] ) toastQue.push(arguments);
 			if( toasted || !toastQue.length ) return;
 			toasted = 1, curr = toastQue.pop();
 			if( !dom ) dom = bs.Dom('<div id="bsUI_toast"></div>').S( '<', 'body', 'border-radius', 100, 'left', '50:%', 'width', '0:%', 'display', 'none', 'opacity', 0, 'this' );
