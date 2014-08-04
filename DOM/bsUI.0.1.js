@@ -1,11 +1,11 @@
 module.exports.ui = (function(){
-
 var r = bs.rand, rf = bs.randf, tb = bs.DETECT.device == 'mobile' ? 'bottom' : 'top',
 inited, init = function(){
 	inited = 1,
 	bs.Css('#bsUI_toast').S( 'overflow', 'hidden', 'position', 'fixed', tb, 0, 'background', '#2b2b2f', 'z-index', 999999999 );
-}, 
-ui = {
+}; 
+
+return {
 	toast:function( msg, time, durationTime, ease, parent ){
 		var toast = function(){
 			if( arguments[0] ) toastQue.push(arguments);
@@ -43,5 +43,4 @@ ui = {
 		(this.toast = toast).apply( this, arguments );
 	}
 };
-return ui;
 })();
