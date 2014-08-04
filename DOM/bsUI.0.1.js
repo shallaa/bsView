@@ -1,7 +1,7 @@
 module.exports.ui = {
 	init:function(){
 		var r = bs.rand, rf = bs.randf;
-		UI.toast = (function(){
+		this.toast = (function(){
 			var tb = bs.DETECT.device == 'mobile' ? 'bottom' : 'top',
 			particle = function( target, rate, T ){
 				var i = r( 2, 5 ), x, y, s, d;
