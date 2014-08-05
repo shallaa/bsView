@@ -11,7 +11,6 @@ return {
 			if( arguments[0] ) toastQue.push(arguments);
 			if( toasted || !toastQue.length ) return;
 			toasted = 1, curr = toastQue.pop();
-			if( !dom ) dom = bs.Dom('<div id="bsUI_toast"></div>').S( '<', 'body', 'border-radius', 100, 'left', '50:%', 'width', '0:%', 'display', 'none', 'opacity', 0, 'this' );
 			bs.ANI.style( dom.S( 'display', 'block', 'html', curr[0], 'this' ),
 				'opacity', 1, 'width', 100, 'left', 0, 'border-radius', 0,
 				'time', curr[1] || .5, 'ease', curr[3] || 'linear', 'end', end,
@@ -37,7 +36,8 @@ return {
 			);
 		},
 		particleEnd = function(target){target.S(null);},
-		toasted, toastQue = [], dom, curr;
+		dom = bs.Dom('<div id="bsUI_toast"></div>').S( '<', 'body', 'border-radius', 0, 'left', '50:%', 'width', '0:%', 'display', 'none', 'opacity', 0, 'this' ),
+		toasted, toastQue = [], curr;
 		
 		if( !inited ) init();
 		(this.toast = toast).apply( this, arguments );
