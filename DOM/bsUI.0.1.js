@@ -18,19 +18,19 @@ return {
 			);
 		},
 		end = function(){
-			bs.ANI.style( dom.S( 'border-radius', 0, 'opacity', 1,'width', 100, 'left', 0, 'this' ), 
+			bs.ANI.style( dom,
 				'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'time', curr[1] || .5, 'ease', curr[3] || 'linear', 'delay', curr[2] || 1.5, 
 				'end', hide, 'update', particle
 			);
 		},
-		hide = function(){dom.S( 'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none' ), toasted = 0, toast();},
+		hide = function(){dom.S( 'display', 'none' ), toasted = 0, toast();},
 		particle = function( target, rate, T ){
 			var i = r( 2, 5 ), x, y, s, d;
 			while(i--) bs.ANI.style(
 				bs.Dom('<div></div>' ).S( 'background', 'rgb('+r(100,200)+','+r(100,200)+','+r(100,200)+')', 'border-radius', 100, 'position','fixed', '<', 'body',
 					'display', 'block', 'width',10, 'height',10, 'left', ( x = ( 1 + ( i % 2 ? -rate : rate ) ) * 50 ) + ':%', tb, y = bs.rand( 10, 40 ), 'opacity', 1, 'this'
 				),
-				'left', r( -10, 10 ) + x, 'top', r( -50, 100 ) + y,
+				'left', r( -10, 10 ) + x, 'top', ( tb == 'top' ? r( -50, 100 ) : r( -100, 50 ) ) + y,
 				'width', s = r( 30, 60 ), 'height',s, 'opacity', 0, 
 				'time', rf( .5, 1.5 ), 'end', particleEnd
 			);
