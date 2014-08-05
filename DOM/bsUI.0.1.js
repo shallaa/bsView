@@ -46,7 +46,7 @@ return {
 		dom = bs.Dom('<div id="bsUI_toast"></div>').S( 'border-radius', 0, 'left', '50:%', 'width', '0:%', 'display', 'none', 'opacity', 0, '<', 'body', 'this' ),
 		toasted, toastQue = [], curr, phase, dTime = mobile ? .35 : .5;
 		if( !inited ) init();
-		( ui.toast = toast ).apply( this, arguments );
+		( this.toast = toast ).apply( this, arguments );
 	}
 };
 })();
