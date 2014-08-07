@@ -2,6 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title></title>
 </head>
 <body>
@@ -14,7 +15,7 @@
     bs(function (){
 
         bs.ui = (function(){
-            var r = bs.rand, rf = bs.randf;
+            var r = bs.rand, rf = bs.randf, isMobile = bs.DETECT.device === 'mobile' ? true : false;
 
             return {
                 alert:function( title, msg, buttons, handler, time, durationTime, ease, parent ){
@@ -33,7 +34,7 @@
                         alerted = 1, curr = alertQue.pop();
                         if( !dom ) {
                             dom = bs.Dom('<div id="bsUI_alert"></div>')
-                                    .S('<', 'body', 'border-radius', 100, 'top', '50%', 'left', '50%',
+                                    .S('<', 'body', 'border-radius', 100, 'top', '50%', 'left', '0:%',
                                     'width', '', 'height', '', 'margin-left', 0, 'margin-top', 0,
                                     'display', 'block', 'opacity', 0, 'this');
                             t = bs.Dom('<div id="bsUI_alert_title"></div>').S('<', '#bsUI_alert', 'opacity', 0, 'this');
@@ -43,7 +44,7 @@
                         t.S('html', curr[0]), m.S('html', curr[1]), b.S('html', curr[2]);
                         setSize();
                         setHandler();
-                        bs.ANI.style( dom.S( 'display', 'block', 'width', 0, 'height', 0, 'this' ),
+                        bs.ANI.style( dom.S( 'display', 'block', 'width', 0, 'height', 0, 'left', 50, 'this' ),
                                 'opacity', 1, 'width', w, 'height', h, 'margin-left', ml, 'margin-top', mt, 'border-radius', 10,
                                 'time', curr[4] || .5, 'ease', curr[6] || 'backOut', 'end', showEnd,
                                 'update', particle
@@ -62,12 +63,14 @@
                         );
                     },
                     hideEnd = function (){
-                        dom.S( 'width', 0, 'height', 0, 'opacity', 0, 'margin-left', 0, 'margin-top', 0, 'display', 'none' ),
+                        dom.S( 'width', 0, 'height', 0, 'left', 0, 'opacity', 0, 'margin-left', 0, 'margin-top', 0, 'display', 'none' ),
                                 t.S('html', ''), m.S('html', ''), b.S('html', ''),
                                 alerted = 0, alert();
                     },
                     particle = function( target, rate, T ){
-                        var i = r( 2, 5 ), x, y, s, d, j=0, k=false;
+                        particleCnt++;
+                        if(isMobile && particleCnt%2) return;
+                        var i = isMobile ? r( 0, 2 ) : r( 2, 5 ), x, y, s, d, j=0, k=false;
                         while(i--) j = i%2, k = j ? !k : k, bs.ANI.style(
                                 bs.Dom('<div></div>' ).S(
                                         'background', 'rgb('+r(150,255)+','+r(150,255)+','+r(150,255)+')',
@@ -84,7 +87,7 @@
                     },
                     particleEnd = function(target){target.S(null);},
                     setSize = function (){
-                        maxW = window.innerWidth ? window.innerWidth*.5 : document.documentElement.clientWidth*.5;
+                        maxW = window.innerWidth ? window.innerWidth*.8 : document.documentElement.clientWidth*.8;
                         if(maxW < minW) maxW = minW;
 
                         dom.S('width', null, 'height', null, 'display', 'block');
@@ -103,7 +106,7 @@
                         });
                         hide();
                     },
-                    alerted, alertQue = [], dom, t, m, b, curr, w, h, ml, mt, maxW, minW = 200, overlay;
+                    alerted, alertQue = [], dom, t, m, b, curr, w, h, ml, mt, maxW, minW = 20, particleCnt=0, overlay;
 
                     if( !inited ) init();
                     (this.alert = alert).apply( this, arguments );
@@ -143,7 +146,7 @@
 
 </script>
 
-<div id="output" style="padding:20px; width:200px; height:200px; overflow-x:hidden; overflow-y: scroll; background-color: #000000; color: #ffffff;"></div>
+<div id="output" style="padding:20px; width:200px; height:200px; overflow-x:hidden; overflow-y: auto; background-color: #000000; color: #ffffff;"></div>
 
 </body>
 </html>
