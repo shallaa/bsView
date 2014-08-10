@@ -140,11 +140,8 @@
                              * Will be overwritten in VML fallback mode below.
                              */
                             Spinner.prototype.opacity = function(el, i, val) {
-                                if (i < el.childNodes.length) el.childNodes[i].style.opacity = val
-                                //var element = el.S('>' + i);
-                                //el.style.opacity = val;
-                                //bs.Dom(element[0]).S('opacity', val);
-                                //console.log(element[0]);
+                                var element = bs.Dom(el).S('>' + i);
+                                bs.Dom(element[0]).S('opacity', val);
                             }
                             Spinner.prototype.spin = function(target) {
                                 this.stop();
@@ -178,6 +175,13 @@
                                 return self;
                             };
                             Spinner.prototype.stop = function() {
+                                var el = this.el;
+                                if (el) {
+                                    clearTimeout(this.timeout)
+                                    el.S(null);
+                                    this.el = undefined;
+                                }
+                                return this;
                             };
                             Spinner.prototype.lines = function(el, o) {
                                 var i = 0
