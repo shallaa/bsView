@@ -31,10 +31,8 @@ bs( function(){
 	var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
 	inited, init = function(){
 		inited = 1,
-		bs.css(
-			'#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
-			'.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
-		);
+		bs.Css('#bsUI_toast').S('style','color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0'),
+		bs.Css('.bsUI_toastParticle').S('style','border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed' );
 	}; 
 	return {
 		toast:function( msg, time, durationTime, ease, parent ){
@@ -79,9 +77,14 @@ bs( function(){
 	};
 	})();
 	UI = ui;
+
 	bs.Css('#test1').S( 'style', 'position:absolute;left:30;top:50;background:#f00;width:50;height:50' );
 	bs.Dom('<div id="test1">aaaaa</div>').S('<','body');
 	bs.Dom('<div id="test2">bbbbb</div>').S('style', 'position:absolute;left:130;top:150;background:#ff0;width:50;height:50', '<', 'body' );
+	
+	bs.Dom('<div id="test3">ccc</div>').S('style', ['position','absolute','left',230,'top',250,'background','#f0f','width',50,'height',50], '<', 'body' );
+	
+	bs.Dom('<div id="test4">ddd</div>').S('style', {position:'absolute',left:330,top:350,background:'#0ff',width:50,height:50}, '<', 'body' );
 } );
 </script>
 </body>

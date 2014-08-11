@@ -2,10 +2,8 @@ module.exports.ui = (function(){
 var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
 inited, init = function(){
 	inited = 1,
-	bs.css(
-		'#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
-		'.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
-	);
+	bs.Css('#bsUI_toast').S('style','color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0'),
+	bs.Css('.bsUI_toastParticle').S('style','border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed' );
 }; 
 return {
 	toast:function( msg, time, durationTime, ease, parent ){
@@ -15,7 +13,8 @@ return {
 			toasted = 1, curr = toastQue.pop(), phase = 1,
 			bs.ANI.style( dom.S( 'display', 'block', 'html', curr[0], 'this' ),
 				'opacity', 1, 'width', 100, 'left', 0, 'border-radius', 0,
-				'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'end', end, 'update', particle
+				'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'end', end,
+				'update', particle
 			);
 		},
 		end = function(){
