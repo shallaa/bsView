@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title></title>
+</head>
+<body>
+
+<script src="../../../../bsJS/bsjs.0.5.js"></script>
+
+<script>
+    var testGlobal;
+    //bs.plugin( 'markdown', null, 'ui', null );
+    bs(function (){
+
+        bs.ui = (function(){
+            var r = bs.rand, rf = bs.randf, isMobile = bs.DETECT.device === 'mobile' ? true : false;
+
+            return {
+                alert:function( title, msg, buttons, handler, time, durationTime, ease, parent ){
+
+                    var inited, clicked, init = function(){
+                        inited = 1;
+                        bs.Css('#bsUI_alert').S( 'overflow', 'hidden', 'position', 'fixed', 'background', '#2b2b2f', 'z-index', 999999999 );
+                    }, alert = function(){
+                        if( arguments[0] ) alertQue.push(arguments);
+                        if( alerted || !alertQue.length ){
+                            if(!alertQue.length) overlay.S(null), overlay = null;
+                            return;
+                        }
+                        alerted = 1, curr = alertQue.pop();
+                        if( !dom ) {
+                            dom = bs.Dom('<div id="bsUI_alert"></div>')
+                                    .S('<', 'body', 'border-radius', 100, 'top', '50%', 'left', '0:%',
+                                    'width', '', 'height', '', 'margin-left', 0, 'margin-top', 0,
+                                    'webkitTransition', '-webkit-transform 0ms ease',
+                                    'display', 'block', 'this');
+                            t = bs.Dom('<div id="bsUI_alert_title"></div>').S('<', '#bsUI_alert', 'opacity', 0, 'this');
+                            m = bs.Dom('<div id="bsUI_alert_msg"></div>').S('<', '#bsUI_alert', 'opacity', 0, 'this');
+                            b = bs.Dom('<div id="bsUI_alert_btns"></div>').S('<', '#bsUI_alert', 'opacity', 0, 'width', '100%', 'text-align', 'center', 'this');
+                        }
+                        t.S('html', curr[0]), m.S('html', curr[1]), b.S('html', curr[2]);
+                        setSize();
+                        setHandler();
+                        dom.S( 'display', 'block', 'width', w, 'height', h, 'margin-left', ml, 'margin-top', mt, 'left', 50,
+                                'webkitTransition', '-webkit-transform 0ms ease',
+                                'webkitTransform', 'scale(0)');
+                        setTimeout(function (){
+                            var time = curr[4] || .5;
+                            bs.ANI.style( dom.S('webkitTransition', '-webkit-transform '+(time*1000)+'ms ease',
+                                            'webkitTransform', 'scale(1)', 'this'),
+                                    'border-radius', 10,
+                                    'time', time, 'ease', curr[6] || 'linear', 'end', showEnd,
+                                    'update', particle
+                            );
+                        },1);
+                        if(!overlay) overlay = bs.Dom('<div id="bsUI_overlay"></div>').S('<', 'body', 'this');
+                    },
+                    showEnd = function(){
+                        if(isMobile) t.S('opacity', 1), m.S('opacity', 1), b.S('opacity', 1);
+                        else bs.ANI.style( t, 'opacity', 1, 'time', .3), bs.ANI.style( m, 'opacity', 1, 'delay', .1, 'time', .3), bs.ANI.style( b, 'opacity', 1, 'delay', .2, 'time', .3);
+                    },
+                    hide = function(){
+                        var time;
+                        if(isMobile) t.S('opacity', 0), m.S('opacity', 0), b.S('opacity', 0), time = 1;
+                        else bs.ANI.style( b, 'opacity', 0, 'time', .3), bs.ANI.style( m, 'opacity', 0, 'delay', .1, 'time', .3), bs.ANI.style( t, 'opacity', 0, 'delay', .2, 'time', .3), time = 500;
+                        setTimeout(function (){
+                            bs.ANI.style( dom.S('webkitTransform', 'scale(0)', 'this'),
+                                    'border-radius', 100,
+                                    'time', curr[4] || .5, 'ease', curr[6] || 'linear', 'end', hideEnd,
+                                    'update', particle
+                            );
+                        },time);
+
+                    },
+                    hideEnd = function (){
+                        dom.S( 'display', 'none' ), t.S('html', ''), m.S('html', ''), b.S('html', ''), alerted = 0, alert();
+                    },
+                    particle = function( target, rate, T ){
+                        var i = r( 2, 5 ), j=0, k=false;
+                        while(i--) j = i%2, k = j ? !k : k, addParticle(j, k, rate);
+                    },
+                    addParticle = function (j, k, rate){
+                        var x, y, s, d, particle = bs.Dom('<div></div>' ).S(
+                                'background', 'rgb('+r(150,255)+','+r(150,255)+','+r(150,255)+')',
+                                'border-radius', 100, 'position','fixed', '<', 'body',
+                                'display', 'block', 'width',60, 'height',60,
+                                'opacity', 1,
+                                'left', ( x = ( j ? r(0, 50) : r(50, 100) ) ) + ':%',
+                                'top', ( y = ( k ? r(0, 50) : r(50, 100) ) )  + ':%',
+                                'webkitTransition', '-webkit-transform 500ms ease',
+                                'webkitTransform', 'translate(0px, 0px) scale(0.2)',
+                                'z-index', 100000000,
+                                'this');
+                        setTimeout(function (){
+                            bs.ANI.style(
+                                    particle.S(
+                                            'webkitTransform', 'translate('+r( -10, 10 )+'px, '+r( -20, 20 )+'px) scale('+rf( 0.4,1 )+')',
+                                            'this'
+                                    ),
+                                    'opacity', 0, 'time', rf( .5, 1.5 ), 'end', particleEnd
+                            );
+                        }, 1);
+                    },
+                    particleEnd = function(target){target.S(null);},
+                    setSize = function (){
+                        maxW = window.innerWidth ? window.innerWidth*.8 : document.documentElement.clientWidth*.8;
+                        if(maxW < minW) maxW = minW;
+
+                        dom.S('width', null, 'height', null, 'display', 'block');
+
+                        w = dom.S('w'), w > maxW ? w = maxW : (w < minW ? w = minW : 0), dom.S('width', w);
+                        h = dom.S('h');
+                        ml = -w*.5, mt = -h*.5;
+                    },
+                    setHandler = function (){
+                        var btn, btnArr = bs.Dom(b.S('>')).S('>'), i = btnArr.length;
+                        clicked = 0;
+                        while(i--) btn = bs.Dom(btnArr[i]), btn.S('*click-index', i, 'click', btnClickHandler);
+                    },
+                    btnClickHandler = function (){
+                        if(clicked) return;
+                        clicked = 1;
+                        curr[3]({
+                            index : bs.Dom(this).S('*click-index')
+                        });
+                        hide();
+                    },
+                    alerted, alertQue = [], dom, t, m, b, curr, w, h, ml, mt, maxW, minW = 20, particleCnt=0, overlay;
+
+                    if( !inited ) init();
+                    (this.alert = alert).apply( this, arguments );
+                }
+            };
+        })();
+
+        bs.Css('body').S('padding', 0, 'margin', 0);
+        bs.Css('#bsUI_alert').S('text-align', 'center');
+        bs.Css('.title').S( 'color', '#eeff41', 'text-align', 'center', 'font-size', '2em', 'padding', '10px 10px' );
+        bs.Css('.msg').S( 'color', '#ffffff', 'text-align', 'center', 'font-size', '1em', 'padding', '10px 10px' );
+        bs.Css('.btns').S('padding', '10px 10px');
+        bs.Css('.btns button').S( 'width', 100, 'color', '#000000', 'text-align', 'center', 'font-size', '1em', 'padding', '10px 10px', 'margin', '5px 5px' );
+        bs.Css('#bsUI_overlay').S('background-color', '#000000', 'width', '100%', 'height', '100%', 'position', 'fixed', 'top', 0, 'left', 0, 'opacity', .5, 'z-index', 99999999);
+
+        bs.ui.alert( '<div class="title">1. gnustory title</div>',
+                        '<div class="msg">message area!<br>숫자가 값이면 자동으로 px 사용특정 단위를 <br>' +
+                        '지정하고 싶은 경우 "XXX:unit" 형식 사용<br>' +
+                        '"100%" 인 경우는 그 이후도 문자열 처리되지만, <br>' +
+                        '"100:%"인 경우 최초 설정 이후는 숫자 사용 가능</div>',
+                '<div class="btns"><button type="button">확인</button><button type="button">취소</button></div>',
+                function (data){
+                    document.getElementById('output').innerHTML += 'button index : ' + data.index + '<br>';
+                },
+                .5 );
+
+        bs.ui.alert( '<div class="title">2. gnustory title</div>',
+                        '<div class="msg">message area!<br>숫자가 값이면 자동으로 px 사용특정 단위를 지정하고 싶은 경우 "XXX:unit" 형식 사용"100%" 인 경우는 그 이후도 문자열 처리되지만, "100:%"인 경우 최초 설정 이후는 숫자 사용 가능</div>',
+                '<div class="btns"><button type="button">확인</button></div>',
+                function (data){
+                    document.getElementById('output').innerHTML += 'button index : ' + data.index + '<br>';
+                },
+                .5 );
+
+    });
+
+
+</script>
+
+<div id="output" style="padding:20px; width:200px; height:200px; overflow-x:hidden; overflow-y: auto; background-color: #000000; color: #ffffff;"></div>
+
+</body>
+</html>
