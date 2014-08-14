@@ -42,8 +42,7 @@ bs(function (){
                 click = function(){
                     var flag = dom.S('width') == 12;
                     
-                    if ( flag ) {
-                        alert('a');
+                    if ( flag ) {                        
                         bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .15, 'ease', 'linear', 'end', function(){
                             bs.ANI.style( dom, 'width', 8, 'height', 17, 'time', .15, 'ease', 'linear' );
                             dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)' );
