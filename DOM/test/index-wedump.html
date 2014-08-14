@@ -15,9 +15,9 @@
 <body>
 <div id="stage">
     <form data-bsview="f0">
-        <input type="checkbox" name="cb0" id="cb0_0" value="0"/><label for="cb0_0"> label0</label><br/><br/>
-        <input type="checkbox" name="cb0" id="cb0_1" value="1"/><label for="cb0_1"> label1</label><br/><br/>
-        <input type="checkbox" name="cb0" id="cb0_2" value="2"/><label for="cb0_2"> label2</label>
+        <input type="checkbox" name="cb0" id="cb0_0" value="0"/><!-- <label for="cb0_0"> label0</label> --><br/>
+        <input type="checkbox" name="cb0" id="cb0_1" value="1"/><!-- <label for="cb0_1"> label1</label> --><br/>
+        <input type="checkbox" name="cb0" id="cb0_2" value="2"/><!-- <label for="cb0_2"> label2</label> -->
     </form>
 </div>
 <div id="result"></div>
@@ -28,11 +28,11 @@ bs(function (){
     var ui = (function(){
         var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
         inited, init = function(){
-            inited = 1,
-            bs.css(
-                '#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
-                '.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
-            );
+            inited = 1;
+            // bs.css(
+            //     '#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
+            //     '.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
+            // );
         };
         return {
             checkbox:function( component ){
@@ -42,15 +42,15 @@ bs(function (){
                 click = function(){
                     var flag = dom.S('width') == 12;
                     
-                    if ( flag ) {                        
+                    if ( flag ) {
                         bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .15, 'ease', 'linear', 'end', function(){
                             bs.ANI.style( dom, 'width', 8, 'height', 17, 'time', .15, 'ease', 'linear' );
-                            dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)' );
+                            dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)', 'top', dom.S('top') - 4 );
                         } );
                     } else {
                         bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .15, 'ease', 'linear', 'end', function(){
                             bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .15, 'ease', 'linear' );
-                            dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)' );
+                            dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)', 'top', dom.S('top') + 4 );
                         } );
                     }
                 },
@@ -62,7 +62,7 @@ bs(function (){
                         pDom.S( 'background-color', 'gray', 'opacity', .2 );
                 }, 'mouseup', function(){ pDom.S( 'background-color', 'white', 'opacity', 1 ); } );
                 component.S( 'opacity', 0, 'width', 0, 'height', 0, 'after', pDom );
-                pDom.S( '>', ( dom = bs.Dom('<div></div>').S( 'style', 'position:relative;display:inline-block;border:2px solid;width:12;height:12;top:11;', 'opacity', 1, 'this' ) ) );
+                pDom.S( '>', ( dom = bs.Dom('<div></div>').S( 'style', 'position:relative;display:inline-block;border:2px solid #696969;width:12;height:12;top:11;', 'opacity', 1, 'this' ) ) );
                 if( !inited ) init();
                 checkbox();
             }
