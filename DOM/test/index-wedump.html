@@ -40,18 +40,28 @@ bs(function (){
                     pDom.S( 'click', click );
                 },
                 click = function(){
-                    var flag = dom.S('width') == 12;                    
+                    var flag = dom.S('width') == 12;
                     
-                    if ( flag ) {                        
-                        dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)' );
-                        bs.ANI.style( dom, 'width', 8, 'height', 15, 'time', .2, 'ease', 'linear' );
-                    } else {                        
-                        dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)' );
-                        bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .2, 'ease', 'linear' );
+                    if ( flag ) {
+                        alert('a');
+                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .15, 'ease', 'linear', 'end', function(){
+                            bs.ANI.style( dom, 'width', 8, 'height', 17, 'time', .15, 'ease', 'linear' );
+                            dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)' );
+                        } );
+                    } else {
+                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .15, 'ease', 'linear', 'end', function(){
+                            bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .15, 'ease', 'linear' );
+                            dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)' );
+                        } );
                     }
                 },
                 pDom = bs.Dom('<div></div>').S( 'style', 'display:inline-block;width:40;height:40;border-radius:300;text-align:center;cursor:pointer;', 'this' ), dom;
-                pDom.S( 'mousedown', function(){ pDom.S( 'background-color', 'green', 'opacity', .3 ); }, 'mouseup', function(){ pDom.S( 'background-color', 'white', 'opacity', 1 ); } );
+                pDom.S( 'mousedown', function(){
+                    if ( dom.S('width') == 12 )
+                        pDom.S( 'background-color', 'green', 'opacity', .2 );
+                    else
+                        pDom.S( 'background-color', 'gray', 'opacity', .2 );
+                }, 'mouseup', function(){ pDom.S( 'background-color', 'white', 'opacity', 1 ); } );
                 component.S( 'opacity', 0, 'width', 0, 'height', 0, 'after', pDom );
                 pDom.S( '>', ( dom = bs.Dom('<div></div>').S( 'style', 'position:relative;display:inline-block;border:2px solid;width:12;height:12;top:11;', 'opacity', 1, 'this' ) ) );
                 if( !inited ) init();
