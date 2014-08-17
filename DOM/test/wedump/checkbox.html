@@ -29,11 +29,7 @@ bs(function (){
     var ui = (function(){
         var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
         inited, init = function(){
-            inited = 1;
-            // bs.css(
-            //     '#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
-            //     '.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
-            // );
+            inited = 1;            
         };
         return {
             checkbox:function( component ){
@@ -90,6 +86,21 @@ bs(function (){
         }
     }
 });
+/***************************************************************
+> 체크박스
+
+1. 기존 체크박스의 숨기는 방법
+ - display: none;
+ - opacity: 0;
+
+2. 레이블의 높이 영향
+ - 체크박스 애니메이션의 크기 변화에 따라 옆에 레이블의 위치가 영향을 받음
+
+3. 체크박스와 bs컴포넌트간의 연동
+ - 값 일치
+ - 이벤트
+ - 포커스
+****************************************************************/
 </script>
 </body>
 </html>
