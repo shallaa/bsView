@@ -26,15 +26,10 @@
 <script>
 bs.debug(0);
 bs(function (){
-    bs.debug(0);
     var ui = (function(){
         var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
         inited, init = function(){
-            inited = 1;
-            // bs.css(
-            //     '#bsUI_toast{color:#eeff41;overflow:hidden;text-align:center;position:fixed;background:#2b2b2f;z-index:999999999;'+tb+':0}' +
-            //     '.bsUI_toastParticle{border-radius:' + ( mobile ? 15 : 40 ) + ';position:fixed}'
-            // );
+            inited = 1;            
         };
         return {
             checkbox:function( component ){
@@ -44,21 +39,19 @@ bs(function (){
                 click = function(){
                     var flag = dom.S('width') == 12;
                     
-                    if ( flag ) {
-                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
+                    bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
+                    	if( flag ){
                             bs.ANI.style( dom, 'width', 8, 'height', 17, 'time', .2, 'ease', 'linear' );
                             dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)', 'top', dom.S('top') - 4, 'left', 16 );
-                        } );
-                    } else {
-                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
-                            bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .2, 'ease', 'linear' );
-                            dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)', 'top', dom.S('top') + 4, 'left', 12 );
-                        } );
-                    }
+                    	}else{
+                    		bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .2, 'ease', 'linear' );
+                        	dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)', 'top', dom.S('top') + 4, 'left', 12 );
+                    	}
+                    } );
                 },
                 pDom = bs.Dom('<div></div>').S( 'style', 'display:inline-block;position:relative;width:40;height:40;border-radius:300;text-align:center;cursor:pointer;', 'this' ), dom;
                 pDom.S( 'mousedown', function(){
-                    if ( dom.S('width') == 12 )
+                    if( dom.S('width') == 12 )
                         pDom.S( 'background-color', 'green', 'opacity', .2 );
                     else
                         pDom.S( 'background-color', 'gray', 'opacity', .2 );
@@ -93,6 +86,21 @@ bs(function (){
         }
     }
 });
+/***************************************************************
+> 체크박스
+
+1. 기존 체크박스의 숨기는 방법
+ - display: none;
+ - opacity: 0;
+
+2. 레이블의 높이 영향
+ - 체크박스 애니메이션의 크기 변화에 따라 옆에 레이블의 위치가 영향을 받음
+
+3. 체크박스와 bs컴포넌트간의 연동
+ - 값 일치
+ - 이벤트
+ - 포커스
+****************************************************************/
 </script>
 </body>
 </html>

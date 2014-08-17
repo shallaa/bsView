@@ -11,50 +11,70 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi" />
         <link rel="shortcut icon" href="http://blog.bsidesoft.com/favicon.ico" type="image/x-icon">
-    </head>
+        <link rel="stylesheet" type="text/css" href="fd-slider/fd-slider.css?v=2">
+        <link rel="stylesheet" type="text/css" href="fd-slider/fd-slider-tooltip.css">
+        <style>
+            #opts {
+                display: inline-block;
+            }
+            #opts label {
+                line-height: 25px;
+                width: 80px;
+            }
+            label {
+                display: inline-block;
+                width: 440px;
+                font-size: 14px;
+                vertical-align: top;
+            }
+            span.fd-slider {
+vertical-align: top;
+display: inline-block;
+width: 150px;
+}
+        </style>
+    </head>Ï
     <body>
         <div id="example">
             <h2>Example</h2>
             <div class="row"><div id="preview-container"><div id="preview"></div></div></div>
-            <div class="row">
-                <form id="opts">
-                    <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
-                    <label>Length:</label><input type="text" name="length" min="0" max="40" value="20"><br>
-                    <label>Width:</label><input type="text" name="width" min="2" max="30" value="10"><br>
-                    <label>Radius:</label><input type="text" name="radius" min="0" max="60" value="30"><br>
-                    <label>Corners:</label><input type="text" name="corners" min="0" max="1" step="0.1" value="1"><br>
-                    <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
-                    <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="60"><br>
-                    <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
-                    <label>Direction:</label>
-                    <select name="direction">
-                        <option value="1">Clockwise</option>
-                        <option value="-1">Counterclockwise</option>
-                    </select>
-                    <br>
-                    <label>Shadow:</label><input type="checkbox" name="shadow"><br>
-                    <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
-                </form>
-            </div>
+
+            <form id="opts">
+                <label>Lines:</label><input type="text" name="lines" min="5" max="16" step="2" value="12"><br>
+                <label>Length:</label><input type="text" name="length" min="0" max="40" value="7"><br>
+                <label>Width:</label><input type="text" name="width" min="2" max="30" value="5"><br>
+                <label>Radius:</label><input type="text" name="radius" min="0" max="60" value="10"><br>
+                <label>Corners:</label><input type="text" name="corners" min="0" max="1" step="0.1" value="1"><br>
+                <label>Rotate:</label><input type="text" name="rotate" min="0" max="90" value="0"><br>
+                <label>Trail:</label><input type="text" name="trail" min="10" max="100" value="100"><br>
+                <label>Speed:</label><input type="text" name="speed" min="0.5" max="2.2" step="0.1" value="1"><br>
+                <label>Direction:</label>
+                <select name="direction">
+                    <option value="1">Clockwise</option>
+                    <option value="-1">Counterclockwise</option>
+                </select>
+                <br>
+                <label>Shadow:</label><input type="checkbox" name="shadow"><br>
+                <label>Hwaccel:</label><input type="checkbox" name="hwaccel"><br>
+            </form>
+
         </div>
         <div id="stage"></div>
         <div id="result"></div>
         <div id="test"></div>
+
         <script src="../../../../bsJS/bsjs.0.5.js"></script>
-        <script src="../../../../bsJSTest/bsTest.js"></script>
-        <script src="../../../../bsJSTest/0.5/printer.js"></script>
         <script>
             var spinner;
             var UI;
-            bs.debug(1);
             bs(function() {
                 var ui = (function() {
                     var mobile = bs.DETECT.device == 'mobile', r = bs.rand, rf = bs.randf, tb = mobile ? 'bottom' : 'top',
                             inited, init = function() {
-                                inited = 1,
-                                        bs.Css('#bsUI_toast').S('color', '#eeff41', 'overflow', 'hidden', 'text-align', 'center', 'position', 'fixed', tb, 0, 'background', '#2b2b2f', 'z-index', 999999999);
-                                bs.Css('.bsUI_toastParticle').S('border-radius', mobile ? 15 : 40, 'position', 'fixed');
-                            };
+                        inited = 1,
+                                bs.Css('#bsUI_toast').S('color', '#eeff41', 'overflow', 'hidden', 'text-align', 'center', 'position', 'fixed', tb, 0, 'background', '#2b2b2f', 'z-index', 999999999);
+                        bs.Css('.bsUI_toastParticle').S('border-radius', mobile ? 15 : 40, 'position', 'fixed');
+                    };
                     return {
                         toast: function(msg, time, durationTime, ease, parent) {
                             var toast = function() {
@@ -64,41 +84,41 @@
                                     return;
                                 toasted = 1, curr = toastQue.pop(), phase = 1,
                                         bs.ANI.style(dom.S('display', 'block', 'html', curr[0], 'this'),
-                                                'opacity', 1, 'width', 100, 'left', 0, 'border-radius', 0,
-                                                'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'end', end,
-                                                'update', particle
-                                                );
+                                        'opacity', 1, 'width', 100, 'left', 0, 'border-radius', 0,
+                                        'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'end', end,
+                                        'update', particle
+                                        );
                             },
                                     end = function() {
-                                        phase = 0,
-                                                bs.ANI.style(dom.S('border-radius', 0, 'opacity', 1, 'width', 100, 'left', 0, 'this'),
-                                                        'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'delay', curr[2] || 1.5,
-                                                        'end', hide, 'update', particle
-                                                        );
-                                    },
+                                phase = 0,
+                                        bs.ANI.style(dom.S('border-radius', 0, 'opacity', 1, 'width', 100, 'left', 0, 'this'),
+                                        'border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'time', curr[1] || dTime, 'ease', curr[3] || 'linear', 'delay', curr[2] || 1.5,
+                                        'end', hide, 'update', particle
+                                        );
+                            },
                                     hide = function() {
-                                        dom.S('border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none'), toasted = 0, toast();
-                                    },
+                                dom.S('border-radius', 100, 'opacity', 0, 'width', 0, 'left', 50, 'display', 'none'), toasted = 0, toast();
+                            },
                                     particle = function(target, rate, T) {
-                                        var i, x, y, s, s0;
-                                        rate = phase ? rate : 1 - rate, mobile ? (i = r(1, 2), s0 = 5) : (i = r(2, 5), s0 = 10);
-                                        while (i--) {
-                                            bs.ANI.style(
-                                                    bs.Dom('<div class="bsUI_toastParticle"></div>').S(
-                                                    'width', s0, 'height', s0, 'background', 'rgb(' + r(100, 200) + ',' + r(100, 200) + ',' + r(100, 200) + ')',
-                                                    tb, y = mobile ? r(5, 15) : r(10, 40), 'left', (x = (1 + (i % 2 ? -rate : rate)) * 50) + ':%', 'opacity', 1,
-                                                    '<', 'body', 'this'
-                                                    ),
-                                                    'left', r(-10, 10) + x, tb, (mobile ? r(-50, 50) : r(-50, 70)) + y,
-                                                    'width', s = mobile ? r(10, 15) : r(20, 40), 'height', s, 'opacity', 0,
-                                                    'time', rf(.5, 1.5), 'end', particleEnd
-                                                    );
+                                var i, x, y, s, s0;
+                                rate = phase ? rate : 1 - rate, mobile ? (i = r(1, 2), s0 = 5) : (i = r(2, 5), s0 = 10);
+                                while (i--) {
+                                    bs.ANI.style(
+                                            bs.Dom('<div class="bsUI_toastParticle"></div>').S(
+                                            'width', s0, 'height', s0, 'background', 'rgb(' + r(100, 200) + ',' + r(100, 200) + ',' + r(100, 200) + ')',
+                                            tb, y = mobile ? r(5, 15) : r(10, 40), 'left', (x = (1 + (i % 2 ? -rate : rate)) * 50) + ':%', 'opacity', 1,
+                                            '<', 'body', 'this'
+                                            ),
+                                            'left', r(-10, 10) + x, tb, (mobile ? r(-50, 50) : r(-50, 70)) + y,
+                                            'width', s = mobile ? r(10, 15) : r(20, 40), 'height', s, 'opacity', 0,
+                                            'time', rf(.5, 1.5), 'end', particleEnd
+                                            );
 
-                                        }
-                                    },
+                                }
+                            },
                                     particleEnd = function(target) {
-                                        target.S(null);
-                                    },
+                                target.S(null);
+                            },
                                     dom = bs.Dom('<div id="bsUI_toast"></div>').S('border-radius', 0, 'left', '50:%', 'width', '0:%', 'display', 'none', 'opacity', 0, '<', 'body', 'this'),
                                     toasted, toastQue = [], curr, phase, dTime = mobile ? .35 : .5;
                             if (!inited)
@@ -227,7 +247,6 @@
                             Spinner.prototype.stop = function() {
                                 var el = this.el;
                                 if (el) {
-                                    console.log(el);
                                     clearTimeout(this.timeout)
                                     el.S(null);
                                     this.el = undefined;
@@ -284,15 +303,14 @@
                         'vertical-align', 'middle',
                         'borderRadius', '8px');
                 bs.Css('.row').S('float', 'left', 'margin-right', 20);
-                bs.Css('form').S('font-size', 12, 'line-height', 22);
-                bs.Css('form label').S('width', 60, 'display', 'block', 'float', 'left');
+                //bs.Css('form').S('font-size', 12, 'line-height', 22);
+                //bs.Css('form label').S('width', 60, 'display', 'block', 'float', 'left');
 
                 bs.Dom('#opts input[min], #opts select').S('change', function() {
                     var opts = {};
                     var fs = bs.Dom('#opts input[min], #opts select');
                     for (var i = 0; i < fs.length; i++) {
                         opts[fs[i].name] = parseFloat(fs[i].value)
-                        console.log(opts[fs[i].name]);
                     }
                     spinner.stop();
                     spinner = UI.spinner(opts).spin(bs.Dom('#preview'));
@@ -316,5 +334,6 @@
 
 
         </script>
+        <script type="text/javascript" src="fd-slider/fd-slider.js"></script>
     </body>
 </html>
