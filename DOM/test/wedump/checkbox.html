@@ -43,21 +43,19 @@ bs(function (){
                 click = function(){
                     var flag = dom.S('width') == 12;
                     
-                    if ( flag ) {
-                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
+                    bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
+                    	if( flag ){
                             bs.ANI.style( dom, 'width', 8, 'height', 17, 'time', .2, 'ease', 'linear' );
                             dom.S( 'border-left', 'none', 'border-top', 'none', 'border-color', '#0f9d58', 'transform', 'rotate(45deg)', 'top', dom.S('top') - 4, 'left', 16 );
-                        } );
-                    } else {
-                        bs.ANI.style( dom, 'width', 0, 'height', 0, 'time', .2, 'ease', 'linear', 'end', function(){
-                            bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .2, 'ease', 'linear' );
-                            dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)', 'top', dom.S('top') + 4, 'left', 12 );
-                        } );
-                    }
+                    	}else{
+                    		bs.ANI.style( dom, 'width', 12, 'height', 12, 'time', .2, 'ease', 'linear' );
+                        	dom.S( 'border', '2px solid', 'transform', 'rotate(0deg)', 'top', dom.S('top') + 4, 'left', 12 );
+                    	}
+                    } );
                 },
                 pDom = bs.Dom('<div></div>').S( 'style', 'display:inline-block;position:relative;width:40;height:40;border-radius:300;text-align:center;cursor:pointer;', 'this' ), dom;
                 pDom.S( 'mousedown', function(){
-                    if ( dom.S('width') == 12 )
+                    if( dom.S('width') == 12 )
                         pDom.S( 'background-color', 'green', 'opacity', .2 );
                     else
                         pDom.S( 'background-color', 'gray', 'opacity', .2 );
