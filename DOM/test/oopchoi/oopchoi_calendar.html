@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>bs5 Test suite</title>
+    <meta name="keywords" content="bs5" />
+    <meta name="description" content="bs5 Test suite" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi" />
+    <link rel="shortcut icon" href="http://blog.bsidesoft.com/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<div id="stage">
+
+</div>
+<script src="../../../../bsJS/bsjs.0.5.js"></script>
+<script>
+    // http://blog.bsidesoft.com/?p=321
+    bs( function(){
+        var selDate, curDate, yearSymbol='년', monthSymbol='월', weekSymbol=['일','월','화','수','목','금','토'],
+                endDate = [31,28,31,30,31,30,31,31,30,31,30,31], i, j, k, t0, t1=1, t2= 0, t3, t4=false, t5;
+        selDate = curDate = dateGet((new Date).getTime());
+        if( isLeapYear( selDate.getFullYear() ) ) endDate[1]++;
+
+
+        function dateGet( $date ){
+
+            var i, temp, h, m, s, ms;
+
+            switch( typeof( $date ) ){
+                case'string' :
+                    ms = h = m = s = 0;
+
+                    // 1
+                    $date = $date.split( '-' );
+
+                    // 2
+                    if( $date[2].indexOf( ' ' ) > -1 ){
+                        temp = $date[2].split( ' ' );
+                        $date[2] = temp[0];
+
+                        //3
+                        if( temp.length == 3 ){
+                            ms = parseInt( temp[2], 10 );
+                            if( ms > 1000 ) ms = 999;
+                        }
+
+                        //4, 5
+                        temp = temp[1].split( ':' );
+                        h = parseInt( temp[0], 10 );
+                        m = parseInt( temp[1], 10 );
+                        s = parseInt( temp[2], 10 );
+                    }
+
+                    //6, 7
+                    return new Date(
+                            parseInt( $date[0], 10 ),
+                            parseInt( $date[1], 10 ) - 1,
+                            parseInt( $date[2], 10 ),
+                            h, m, s, ms
+                    );
+
+                //8
+                case'number':
+                    return new Date( $date );
+
+                //9
+                default:
+                    if( $date.constructor == Date ){
+                        return $date;
+                    }else{
+                        return new Date();
+                    }
+            }
+        }
+        function datePart( $part, $date ){
+            var i;
+            switch( $part ){
+                case 'Y': return $date.getFullYear() + '';
+                case 'y': return datePart( 'Y', $date ).substr( -2 );
+
+                case 'n': return ( $date.getMonth() + 1 ) + '';
+                case 'm': return ( '00' + datePart( 'n', $date ) ).substr( -2 );
+
+                case 'j': return $date.getDate() + '';
+                case 'd': return ( '00' + datePart( 'j', $date ) ).substr( -2 );
+
+                case 'G': return $date.getHours() + '';
+                case 'H': return ( '00' + datePart( 'G', $date ) ).substr( -2 );
+
+                case 'g':
+                    i = ( parseInt( $date.getHours() ) % 12 ) + '';
+                    return i ? i : '0';
+                case 'h': return ( '00' + datePart( 'g', $date ) ).substr( -2 );
+
+                case 'i': return ( '00' + $date.getMinutes() ).substr( -2 );
+                case 's': return ( '00' + $date.getSeconds() ).substr( -2 );
+                case 'u': return $date.getMilliseconds() + '';
+
+                case 'w':
+                    return weekSymbol[$date.getDay()];
+//                    switch( $date.getDay() ){
+//                        case 0: return '일';
+//                        case 1: return '월';
+//                        case 2: return '화';
+//                        case 3: return '수';
+//                        case 4: return '목';
+//                        case 5: return '금';
+//                        case 6: return '토';
+//                    }
+                default: return $part;
+            }
+        }
+
+        function dateFormat( $part, $date ){
+            var date, i, j, result;
+            date = dateGet( $date );
+            result = '';
+            for( i = 0, j = $part.length ; i < j ; i++ ) result += datePart( $part.charAt(i), date );
+            return result;
+        }
+
+        function dateAdd( $interval, $number, $date ){
+            var date;
+            date = dateGet( $date );
+
+            switch( $interval.toLowerCase()){
+                case'y': //year
+                    date.setFullYear( date.getFullYear() + $number );
+                    break;
+                case'm': //month
+                    date.setMonth( date.getMonth() + $number );
+                    break;
+                case'd': //day
+                    date.setDate( date.getDate() + $number );
+                    break;
+                case'h': //hour
+                    date.setHours( date.getHours() + $number );
+                    break;
+                case'i': //minute
+                    date.setMinutes( date.getMinutes() + $number );
+                    break;
+                case's': //second
+                    date.setSeconds( date.getSeconds() + $number );
+                    break;
+                case'ms': //msecond
+                    date.setMilliseconds( date.getMilliseconds() + $number );
+                    break;
+                default:
+                    return null;
+            }
+            return date;
+        }
+
+        function isLeapYear( $year ){
+            return ( $year % 4 == 0 && $year % 100 != 0 ) || $year % 400 == 0;
+        }
+
+        function dateDiff( $interval, $dateOld, $dateNew ){
+            var date1, date2, d1_year, d1_month, d1_date, d2_year, d2_month, d2_date, result, temp, i;
+            date1 = dateGet( $dateOld );
+            date2 = dateGet( $dateNew );
+
+            switch( $interval.toLowerCase()){
+                case'y': //year
+                    return date2.getFullYear() - date1.getFullYear();
+                case'm': //month
+                    return ( date2.getFullYear() - date1.getFullYear() ) * 12 + date2.getMonth() - date1.getMonth();
+                case'h': //hour
+                    return parseInt( ( date2.getTime() - date1.getTime() ) / 3600000 );
+                case'i': //minute
+                    return parseInt( ( date2.getTime() - date1.getTime() ) / 60000 );
+                case's': //second
+                    return parseInt( ( date2.getTime() - date1.getTime() ) / 1000 );
+                case'ms': //msecond
+                    return date2.getTime() - date1.getTime();
+                case'd': //day
+                    d1_year = date1.getFullYear();
+                    d1_month = date1.getMonth();
+                    d1_date = date1.getDate();
+
+                    d2_year = date2.getFullYear();
+                    d2_month = date2.getMonth();
+                    d2_date = date2.getDate();
+
+                    result = 0;
+
+                    if( d2_year - d1_year > 0 ){
+
+                        // 연도가 다른 경우 3단계 처리
+                        result += dateDiff( 'd', dateGet( date1 ), dateGet( d1_year + '-12-31' ) );
+                        result += dateDiff( 'd', dateGet( d2_year + '-1-1' ), dateGet( date2 ) );
+                        for( i = d1_year + 2 ; i < d2_year ; i++ ) result += 365 + ( isLeapYear( i ) ? 1 : 0 );
+
+                    }else{
+
+                        temp = [31,28,31,30,31,30,31,31,30,31,30,31];
+                        if ( isLeapYear( d1_year ) ) temp[1]++;
+
+                        if( d2_month - d1_month > 0 ){
+
+                            // 월이 다른 경우 3단계 처리
+                            result += temp[d1_month] - d1_date + 1;
+                            result += d2_date - 1;
+                            for( i = d1_month + 1 ; i < d2_month ; i++ ) result += temp[i];
+
+                        }else{
+                            result += d2_date - d1_date;
+                        }
+                    }
+                    return result * order;
+                default:
+                    return null;
+            }
+        }
+
+
+
+
+
+
+
+        bs.Dom("<table id='cheader'></table>").S("<", '#stage');
+        bs.Dom('<tr id="hr0"></tr>').S("<", "#cheader");
+        bs.Dom('<td id="hr0c0"></td>').S('<', '#hr0');
+        bs.Dom('<td id="hr0c1"></td>').S('<', '#hr0');
+        bs.Dom('<td id="hr0c2"></td>').S('<', '#hr0');
+        bs.Dom('#hr0c0').S('html', '<');
+        bs.Dom('#hr0c1').S('html', dateFormat( 'Y' + yearSymbol + ' m' + monthSymbol, selDate));
+        //bs.Dom('#hr0c1').S('html', datePart( 'Y', selDate) + yearSymbol + ' ' + datePart('m', selDate) + monthSymbol);
+        //bs.Dom('#hr0c1').S('html', selDate.getFullYear() + yearSymbol + ' ' + selDate.getMonth() + monthSymbol);
+        bs.Dom('#hr0c2').S('html', '>');
+
+        bs.Dom("<table id='cbody'></table>").S("<", '#stage');
+        bs.Dom('<tr id="cr0"></tr>').S("<", "#cbody");
+        bs.Dom('<td id="cr0c0"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c1"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c2"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c3"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c4"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c5"></td>').S('<', '#cr0');
+        bs.Dom('<td id="cr0c6"></td>').S('<', '#cr0');
+
+        t0 = t3 = dateGet(dateFormat('Y-m-1', selDate)).getDay();
+        console.log(t0);    // 5
+
+        console.log(endDate[datePart('n', selDate)-1]);
+
+        for(i=1, j= t5 = endDate[datePart('n', selDate)-1]; i<j; i++){
+            if(t0%7==0){
+                t1++;
+                if(i>j-7 && i!=j-1) t1++;
+            }
+            t0++;
+        }
+        console.log(t1);
+
+        bs.Dom('#cr0c'+0).S('html', '<span>'+weekSymbol[0]+'</span>');
+        bs.Dom('#cr0c'+1).S('html', '<span>'+weekSymbol[1]+'</span>');
+        bs.Dom('#cr0c'+2).S('html', '<span>'+weekSymbol[2]+'</span>');
+        bs.Dom('#cr0c'+3).S('html', '<span>'+weekSymbol[3]+'</span>');
+        bs.Dom('#cr0c'+4).S('html', '<span>'+weekSymbol[4]+'</span>');
+        bs.Dom('#cr0c'+5).S('html', '<span>'+weekSymbol[5]+'</span>');
+        bs.Dom('#cr0c'+6).S('html', '<span>'+weekSymbol[6]+'</span>');
+
+        for(i=1,j=t1+1; i<=j; i++){
+            bs.Dom('<tr></tr>').S("<", "#cbody", '@id', "cr"+i);
+            for(k=0,l=7; k<l; k++){
+                if((k>=t3||t4)&&t2<t5){
+                    bs.Dom('<td id="cr"' + i + '"c"' + k + '>'+ ++t2 +'</td>').S('<', '#cr'+i);
+                    t4 = true;
+                }else{
+                    bs.Dom('<td id="cr"' + i + '"c"' + k + '>'+ '' +'</td>').S('<', '#cr'+i);
+                }
+            }
+        }
+
+//	bs.Vdom.test();
+    } );
+</script>
+</body>
+</html>
