@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>TODO supply a title</title>
+		<title>easing viewer</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -10,18 +10,30 @@
 		<script src="../../../../bsJS/bsjs.0.5.js"></script>
 		<script>
 			bs( function(){
-				//bs.Css('.bsUI_button').S('style', 'width:110;height:80;background-colr:#f00;display:block');
+				var onClick, BAR;
+				BAR = 480;
+				
+				onClick = function(){
+					console.log(bs.Dom('#slider'));
+				};
+				/*
+				 * Style
+				 */
 				bs.Css( '.bsUI_button' ).S( 'width', 110, 'height', 40, 'float', 'left',
 					'background-color', '#5677fc', 'color', '#FFF', 'line-height', 40,
 					'text-align', 'center', 'font-size', '10pt', 'font-weight', 'bold',
 					'borderRadius', 3 );
-				bs.Css( '.bsUI_bar' ).S( 'style', 'width:100px;height:100px;background-color:#ff0;' );
-
-				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example' );
+				bs.Css( '.bsUI_bar' ).S( 'width', BAR, 'height', 2, 'background-color', '#e0e0e0',
+					'float', 'left', 'margin-top', 18, 'margin-left', 20);
+				bs.Css( '.bsUI_slider' ).S( 'width', 20, 'height', 20, 'background-color', '#ff4081',
+					'borderRadius', 30, 'margin-top', -8, 'position', 'absolute');
+				/*
+				 * DOM
+				 */
+				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example', 'click', onClick );
 				bs.Dom( '<div class="bsUI_bar"></div>' ).S( '<', '#example' );
-				bs.Dom( '<div class="bsUI_slider"></div>' ).S( '<', '#example' );
-
-				console.log( 'bs init.' );
+				bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( '<', '.bsUI_bar' );
+				
 			} );
 		</script>
 	</body>
