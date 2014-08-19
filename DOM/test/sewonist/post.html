@@ -1,40 +1,97 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>easing viewer</title>
+		<title>Ease Visualizer</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="//fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
+		<style>
+			body {
+				font-family:Roboto;
+				color:#333;
+			}
+			.align-left {
+				float:left;
+			}
+			.cols {
+				font-size:9pt;
+				margin-right:20px;
+			}
+			#example {
+				margin-bottom:15px;
+			}
+		</style>
 	</head>
 	<body>
+		<h1>Ease Visualizer</h1>
 		<div id="example"></div>
+		<div id="option" style="clear:both">
+			<div class="align-left cols">
+				duration
+				<br/>
+				<input type="text" size="1" value="2" id="duration" />
+			</div>
+			<div class="align-left cols">
+				ease
+				<br/>
+				<select size="1" id="ease">
+					<option value="linear" selected="">linear</option>
+					<option value="backIn">backIn</option>
+					<option value="backOut">backOut</option>
+					<option value="backInOut">backInOut</option>
+					<option value="bounceIn">bounceIn</option>
+					<option value="bounceOut">bounceOut</option>
+					<option value="bounceInOut">bounceInOut</option>
+					<option value="sineIn">sineIn</option>
+					<option value="sineOut">sineOut</option>
+					<option value="sineInOut">sineInOut</option>
+					<option value="circleIn">circleIn</option>
+					<option value="circleOut">circleOut</option>
+					<option value="circleInOut">circleInOut</option>
+					<option value="quadraticIn">quadraticIn</option>
+					<option value="quadraticOut">quadraticOut</option>
+				</select>
+			</div>
+		</div>
 		<script src="../../../../bsJS/bsjs.0.5.js"></script>
 		<script>
 			bs( function(){
 				var onClick, BAR;
-				BAR = 480;
+				BAR = 340;
 
+				/*
+				 * Event handler
+				 */
 				onClick = function(){
-					console.log( bs.Dom( '#slider' ) );
-					console.log( BAR );
-					bs.ANI.style( bs.Dom( '#slider' ), 'left', BAR, 'time', 1 );
+					console.log( bs.Dom( '#duration' ).S( '@value' ) );
+					console.log( bs.Dom( '#ease option[selected]' ).S( '@value' ) );
+					bs.ANI.stop();
+					bs.Dom( '#slider' ).S( 'left', 0 );
+					bs.ANI.style( bs.Dom( '#slider' ),
+						'left', BAR,
+						'time', bs.Dom( '#duration' ).S( '@value' ),
+						'ease', bs.Dom( '#ease option[selected]' ).S( '@value' )
+						);
 				};
 				/*
 				 * Style
 				 */
+				bs.Css( 'h1' ).S( 'style', 'font-size:24pt;font-weight:lighter;color:#616161;' );
 				bs.Css( '.bsUI_button' ).S( 'width', 110, 'height', 40, 'float', 'left',
 					'background-color', '#5677fc', 'color', '#FFF', 'line-height', 40,
-					'text-align', 'center', 'font-size', '10pt', 'font-weight', 'bold',
-					'borderRadius', 3 );
+					'text-align', 'center', 'borderRadius', 3,
+					'font-size', '10pt', 'font-weight', 'bold' );
 				bs.Css( '.bsUI_bar' ).S( 'width', BAR, 'height', 2, 'background-color', '#e0e0e0',
-					'float', 'left', 'margin-top', 18, 'margin-left', 20 );
+					'float', 'left', 'margin-top', 18, 'margin-left', 20, 'position', 'relative' );
 				bs.Css( '.bsUI_slider' ).S( 'width', 20, 'height', 20, 'background-color', '#ff4081',
-					'borderRadius', 30, 'margin-top', -8, 'position', 'absolute' );
+					'borderRadius', 30, 'margin-top', -10, 'position', 'absolute' );
 				/*
 				 * DOM
 				 */
 				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example', 'click', onClick );
 				bs.Dom( '<div class="bsUI_bar"></div>' ).S( '<', '#example' );
-				bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( '<', '.bsUI_bar' );
+				bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( 'left', 0, '<', '.bsUI_bar' );
+				bs.Dom( '<div></div>' ).S( 'clear', 'both', '<', '#example' );
 
 			} );
 		</script>
