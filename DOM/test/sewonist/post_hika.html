@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ease Visualizer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="//fonts.googleapis.com/css?family=Roboto:100italic,100,300italic,300,400italic,400,500italic,500,700italic,700,900italic,900" rel="stylesheet" type="text/css">
+<style>
+body{font-family:Roboto;color:#333;margin:0;padding:0}
+.align-left{float:left}
+.cols{font-size:9pt;margin-right:20px}
+#stage{margin:20px}
+#example{margin-bottom:15px}
+</style>
+<script id="css" type="text/bsCss">
+h1{font-size:24pt;font-weight:100;color:#616161}
+.bsUI_button{
+	width:110;height:40;float:left;background-color:#5677fc;color:#FFF;line-height:40;
+	text-align:center;border-radius:3;font-size:10pt;font-weight:bold
+}
+.bsUI_bar{
+	width:@BAR@;height:2;background-color:#e0e0e0;float:left;
+	margin-top:18;margin-left:20;position:relative
+}
+.bsUI_slider{
+	width:@SIZE@;height:@SIZE@;background-color:#ff4081;z-index:100;
+	border-radius:100;margin-top:@TOP@;position:absolute
+}
+.bsUI_sliderParticle{border-radius:100;position:absolute;z-index:1}
+</script>
+</head>
+<body>
+<div id="stage">
+<h1>Ease Visualizer</h1>
+	<div id="example"></div>
+	<div id="option" style="clear:both">
+		<div class="align-left cols">
+			duration<br/>
+			<input type="text" size="1" value="1" id="duration" />
+		</div>
+		<div class="align-left cols">
+			ease<br/>
+			<select size="1" id="ease">
+				<option value="linear">linear</option>
+				<option value="backIn">backIn</option><option value="backOut" selected>backOut</option><option value="backInOut">backInOut</option>
+				<option value="bounceOut">bounceOut</option>
+				<option value="sineIn">sineIn</option><option value="sineOut">sineOut</option><option value="sineInOut">sineInOut</option>
+				<option value="circleIn">circleIn</option><option value="circleOut">circleOut</option><option value="circleInOut">circleInOut</option>
+				<option value="quadraticIn">quadraticIn</option><option value="quadraticOut">quadraticOut</option>
+			</select>
+		</div>
+	</div>
+</div>
+<script src="../../../../bsJS/bsjs.0.5.js"></script>
+<script>
+bs( function(){
+	var BAR, SIZE, term, speed0, speed1, duration, 
+	onClick = function(){
+		duration = parseFloat(bs.Dom( '#duration' ).S( '@value' )),
+		term = parseInt( duration * 2.8 ),
+		speed0 = duration * .4,
+		speed1 = duration * .7,
+		bs.ANI.stop(),
+		bs.Dom('@.bsUI_sliderParticle').S(null),
+		bs.ANI.style( bs.Dom('#slider').S( 'left', 0, 'this' ),
+			'left', BAR - SIZE,
+			'time', duration,
+			'ease', bs.Dom('#ease').S('@value'),
+			'update', particle
+		);
+	},
+	particle = function( target, rate ){
+		var x, s;
+		if( parseInt( rate * 1000 ) % term ) return;
+		s = bs.rand( SIZE * 1.25, SIZE * 2.5 );
+		bs.ANI.style(
+			bs.Dom('<div class="bsUI_sliderParticle"></div>' ).S( 
+				'width', SIZE, 'height', SIZE, 'background', 'rgb(' + bs.rand( 140, 200 ) + ',' + bs.rand( 140, 200 ) + ',' + bs.rand( 140, 200 ) + ')',
+				'left', x = target.S('left'), 'opacity', .7, 'margin-top', SIZE * -.5,
+				'<', '.bsUI_bar', 'this'
+			),
+			'left', ( x -= bs.randf( BAR * .1, BAR * .3 ), x < 0 ? 0 : x > BAR - SIZE ? BAR - SIZE : x ), 'margin-top', s * -.5,
+			'width', s, 'height', s, 'opacity', 0, 'time', bs.randf( speed0, speed1 ), 'end', particleEnd
+		);
+	},
+	particleEnd = function(target){target.S(null);};
+	
+	bs.css( bs.tmpl( bs.Dom('#css').S('@text'), {BAR:BAR = 340, SIZE:SIZE = 20, TOP:-10} ) ),
+	bs.Dom('#example').S(
+		'>', bs.Dom('<div class="bsUI_button">START</div>').S( 'click', onClick, 'this' ),
+		'>', bs.Dom('<div class="bsUI_bar"></div>').S(
+			'>', bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( 'left', 0, 'transform', 'rotateX(0)', 'this' ),
+			'this' ),
+		'>', bs.Dom( '<div></div>' ).S( 'clear', 'both', 'this' )
+	);
+} );
+</script>
+</body>
+</html>
