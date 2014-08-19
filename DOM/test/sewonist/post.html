@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TODO supply a title</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="example"></div>
+		<script src="../../../../bsJS/bsjs.0.5.js"></script>
+		<script>
+			bs( function(){
+				//bs.Css('.bsUI_button').S('style', 'width:110;height:80;background-colr:#f00;display:block');
+				bs.Css( '.bsUI_button' ).S( 'width', 110, 'height', 40, 'float', 'left',
+					'background-color', '#5677fc', 'color', '#FFF', 'line-height', 40,
+					'text-align', 'center', 'font-size', '10pt', 'font-weight', 'bold',
+					'borderRadius', 3 );
+				bs.Css( '.bsUI_bar' ).S( 'style', 'width:100px;height:100px;background-color:#ff0;' );
+
+				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example' );
+				bs.Dom( '<div class="bsUI_bar"></div>' ).S( '<', '#example' );
+				bs.Dom( '<div class="bsUI_slider"></div>' ).S( '<', '#example' );
+
+				console.log( 'bs init.' );
+			} );
+		</script>
+	</body>
+</html>
