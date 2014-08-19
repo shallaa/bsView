@@ -12,9 +12,11 @@
 			bs( function(){
 				var onClick, BAR;
 				BAR = 480;
-				
+
 				onClick = function(){
-					console.log(bs.Dom('#slider'));
+					console.log( bs.Dom( '#slider' ) );
+					console.log( BAR );
+					bs.ANI.style( bs.Dom( '#slider' ), 'left', BAR, 'time', 1 );
 				};
 				/*
 				 * Style
@@ -24,16 +26,16 @@
 					'text-align', 'center', 'font-size', '10pt', 'font-weight', 'bold',
 					'borderRadius', 3 );
 				bs.Css( '.bsUI_bar' ).S( 'width', BAR, 'height', 2, 'background-color', '#e0e0e0',
-					'float', 'left', 'margin-top', 18, 'margin-left', 20);
+					'float', 'left', 'margin-top', 18, 'margin-left', 20 );
 				bs.Css( '.bsUI_slider' ).S( 'width', 20, 'height', 20, 'background-color', '#ff4081',
-					'borderRadius', 30, 'margin-top', -8, 'position', 'absolute');
+					'borderRadius', 30, 'margin-top', -8, 'position', 'absolute' );
 				/*
 				 * DOM
 				 */
 				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example', 'click', onClick );
 				bs.Dom( '<div class="bsUI_bar"></div>' ).S( '<', '#example' );
 				bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( '<', '.bsUI_bar' );
-				
+
 			} );
 		</script>
 	</body>
