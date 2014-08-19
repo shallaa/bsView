@@ -35,7 +35,7 @@
 				ease
 				<br/>
 				<select size="1" id="ease">
-					<option value="linear" selected="">linear</option>
+					<option value="linear">linear</option>
 					<option value="backIn">backIn</option>
 					<option value="backOut">backOut</option>
 					<option value="backInOut">backInOut</option>
@@ -64,19 +64,19 @@
 				 */
 				onClick = function(){
 					console.log( bs.Dom( '#duration' ).S( '@value' ) );
-					console.log( bs.Dom( '#ease option[selected]' ).S( '@value' ) );
+					console.log( bs.Dom( '#ease' ).S( '@value' ) );
 					bs.ANI.stop();
 					bs.Dom( '#slider' ).S( 'left', 0 );
 					bs.ANI.style( bs.Dom( '#slider' ),
 						'left', BAR,
 						'time', bs.Dom( '#duration' ).S( '@value' ),
-						'ease', bs.Dom( '#ease option[selected]' ).S( '@value' )
+						'ease', bs.Dom( '#ease' ).S( '@value' )
 						);
 				};
 				/*
 				 * Style
 				 */
-				bs.Css( 'h1' ).S( 'style', 'font-size:24pt;font-weight:lighter;color:#616161;' );
+				bs.Css( 'h1' ).S( 'style', 'font-size:24pt;font-weight:100;color:#616161;' );
 				bs.Css( '.bsUI_button' ).S( 'width', 110, 'height', 40, 'float', 'left',
 					'background-color', '#5677fc', 'color', '#FFF', 'line-height', 40,
 					'text-align', 'center', 'borderRadius', 3,
