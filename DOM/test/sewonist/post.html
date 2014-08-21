@@ -39,9 +39,6 @@
 					<option value="backIn">backIn</option>
 					<option value="backOut">backOut</option>
 					<option value="backInOut">backInOut</option>
-					<option value="bounceIn">bounceIn</option>
-					<option value="bounceOut">bounceOut</option>
-					<option value="bounceInOut">bounceInOut</option>
 					<option value="sineIn">sineIn</option>
 					<option value="sineOut">sineOut</option>
 					<option value="sineInOut">sineInOut</option>
@@ -63,8 +60,8 @@
 				 * Event handler
 				 */
 				onClick = function(){
-					console.log( bs.Dom( '#duration' ).S( '@value' ) );
-					console.log( bs.Dom( '#ease' ).S( '@value' ) );
+					console.log( 'time : ' + bs.Dom( '#duration' ).S( '@value' ) +
+						", ease : " + bs.Dom( '#ease' ).S( '@value' ) );
 					bs.ANI.stop();
 					bs.Dom( '#slider' ).S( 'left', 0 );
 					bs.ANI.style( bs.Dom( '#slider' ),
@@ -79,20 +76,19 @@
 				bs.Css( 'h1' ).S( 'style', 'font-size:24pt;font-weight:100;color:#616161;' );
 				bs.Css( '.bsUI_button' ).S( 'width', 110, 'height', 40, 'float', 'left',
 					'background-color', '#5677fc', 'color', '#FFF', 'line-height', 40,
-					'text-align', 'center', 'borderRadius', 3,
+					'text-align', 'center', 'border-radius', 3,
 					'font-size', '10pt', 'font-weight', 'bold' );
 				bs.Css( '.bsUI_bar' ).S( 'width', BAR, 'height', 2, 'background-color', '#e0e0e0',
 					'float', 'left', 'margin-top', 18, 'margin-left', 20, 'position', 'relative' );
 				bs.Css( '.bsUI_slider' ).S( 'width', 20, 'height', 20, 'background-color', '#ff4081',
-					'borderRadius', 30, 'margin-top', -10, 'position', 'absolute' );
+					'border-radius', 30, 'margin-top', -10, 'position', 'absolute' );
 				/*
 				 * DOM
 				 */
-				bs.Dom( '<div class="bsUI_button">START</div>' ).S( '<', '#example', 'click', onClick );
-				bs.Dom( '<div class="bsUI_bar"></div>' ).S( '<', '#example' );
-				bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( 'left', 0, '<', '.bsUI_bar' );
-				bs.Dom( '<div></div>' ).S( 'clear', 'both', '<', '#example' );
-
+				bs.Dom( '#example' ).S( '>', bs.Dom( '<div class="bsUI_button">START</div>' ).S( 'click', onClick, 'this' ) );
+				bs.Dom( '#example' ).S( '>', bs.Dom( '<div class="bsUI_bar"></div>' ).S( 'this' ) );
+				bs.Dom( '.bsUI_bar' ).S( '>', bs.Dom( '<div class="bsUI_slider" id="slider"></div>' ).S( 'left', 0, 'this' ) );
+				bs.Dom( '<div></div>' ).S( '<', '#example', 'clear', 'both' );
 			} );
 		</script>
 	</body>
